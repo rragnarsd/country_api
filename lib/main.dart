@@ -1,7 +1,5 @@
-import 'dart:convert';
-
+import 'package:country_api/services/services.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -16,18 +14,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Countries(),
+      home: Country(),
     );
   }
 }
 
-class Countries extends StatefulWidget {
+class Country extends StatefulWidget {
   @override
-  _CountriesState createState() => _CountriesState();
+  _CountryState createState() => _CountryState();
 }
 
-class _CountriesState extends State<Countries> {
-  List listResponse;
+class _CountryState extends State<Country> {
+  List<Country> _countries;
+  bool _isLoading;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLoading = true;
+    Services.getCountries().then((countries) {
+      _countries = countries;
+      _isLoading = false;
+    });
+  }
+/*  List listResponse;
   Map mapResponse;
   List listOfNames;
   List imageUrl = [];
@@ -51,12 +61,26 @@ class _CountriesState extends State<Countries> {
   void initState() {
     super.initState();
     fetchDataFromApi();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
+      appBar: AppBar(
+        title: Text(_isLoading ? 'Loading...' : 'Countries'),
+      ),
+      body: Container(
+          color: Colors.white,
+          child: ListView.builder(
+              itemCount: null == _countries ? 0 : _countries.length,
+              itemBuilder: (context, index) {
+                Country country = _countries[index];
+                return ListTile(
+                  title: Text(_countries[index]),
+                );
+              }),
+      ),
+      /* body: SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(right: 20.0, left: 20.0),
         child: Column(
@@ -69,7 +93,7 @@ class _CountriesState extends State<Countries> {
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
               ),
-              itemCount: imageUrl.length,
+             */ /* itemCount: imageUrl.length,*/ /*
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
@@ -77,10 +101,11 @@ class _CountriesState extends State<Countries> {
                   },
                   child: Card(
                     child:
-                        /*Image.network(mapResponse[index])*/
+                        */ /*Image.network(mapResponse[index])*/ /*
                         Center(
                             child: Text(
-                      listResponse[index]['name'],
+                              'hæ',
+                      */ /*listResponse[index]['name'],*/ /*
                       style: TextStyle(fontSize: 16.0),
                     )),
                   ),
@@ -90,6 +115,7 @@ class _CountriesState extends State<Countries> {
           ],
         ),
       ),
-    ));
+    )*/
+    );
   }
 }

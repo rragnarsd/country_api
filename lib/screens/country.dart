@@ -1,65 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Country extends StatelessWidget {
+class Country extends StatefulWidget {
   final Map country;
+
   Country(this.country);
+
+  @override
+  _CountryState createState() => _CountryState();
+}
+
+class _CountryState extends State<Country> {
+  String flag;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(country['name']),
+        title: Text(widget.country['name']),
       ),
       body: Column(
         children: [
           SizedBox(height: 20.0,),
           Center(
-            child: Container(
-                child: SvgPicture.network(country['flag'], height: 230,),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 350
+              ),
+                child: SvgPicture.network(widget.country['flag'], height: 240),
             ),
           ),
           SizedBox(height: 20.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Country Name: ',
-            textInfoTwo: 'name',
-          ),
-          SizedBox(height: 5.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Capital: ',
-            textInfoTwo: 'capital',
-          ),
-          SizedBox(height: 5.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Region: ',
-            textInfoTwo: 'region',
-          ),
-          SizedBox(height: 5.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Sub-Region: ',
-            textInfoTwo: 'region',
-          ),
-          SizedBox(height: 5.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Population: ',
-            textInfoTwo: 'population',
-          ),
-          SizedBox(height: 5.0,),
-          CountryInfo(
-            country: country,
-            textInfoOne: 'Alpha-3-Code: ',
-            textInfoTwo: 'alpha3Code',
-          ),
-         /* CountryInfo(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.country['name'], style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w700),
+              ),
+              SizedBox(height: 20.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Country Name: ',
+                textInfoTwo: 'name',
+              ),
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Capital: ',
+                textInfoTwo: 'capital',
+              ),
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Region: ',
+                textInfoTwo: 'region',
+              ),
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Sub-Region: ',
+                textInfoTwo: 'region',
+              ),
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Population: ',
+                textInfoTwo: 'population',
+              ),
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Alpha-3-Code: ',
+                textInfoTwo: 'alpha3Code',
+              ),
+              /* CountryInfo(
             country: country,
             textInfoOne: 'Currency: ',
             textInfoTwo: '${currencies[3]}',
           ),*/
+            ],
+          )
         ],
       ),
     );

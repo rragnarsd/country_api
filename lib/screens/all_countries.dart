@@ -1,17 +1,23 @@
 import 'package:country_api/screens/country.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AllCountries extends StatefulWidget {
+
   @override
   _AllCountriesState createState() => _AllCountriesState();
 }
 
 class _AllCountriesState extends State<AllCountries> {
   Future<List> countries;
+  List<String> countriesFlag = [];
+  String flag;
 
   Future<List> fetchCountries() async {
-    var response = await Dio().get('https://restcountries.eu/rest/v2/all');
+    /*var response = await Dio().get('https://restcountries.eu/rest/v2/all');*/
+    var response = await Dio().get('https://restcountries.eu/rest/v2/all?fields=name;capital;currencies;alpha3Code;flag;languages;population;subregion;');
+
     return response.data;
   }
 
@@ -24,9 +30,6 @@ class _AllCountriesState extends State<AllCountries> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('CountryAPI'),
-        ),
         body: FutureBuilder<List>(
           future: countries,
           builder: (context, snapshot) {
@@ -47,19 +50,28 @@ class _AllCountriesState extends State<AllCountries> {
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Country(snapshot.data[index])
-                            ));},
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  Country(snapshot.data[index]),
+                            ),
+                          );
+                        },
                         child: Card(
-                          child: Text(snapshot.data[index]['name']),
+                          child:
+                          Text(snapshot.data[index]['name'], style: TextStyle(fontSize: 16.0),),
+                              /*SvgPicture.network(snapshot.data[index]['flag']),*/
                         ),
                       );
                     },
                   ),
                 ),
               );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
             }
             return Center(child: CircularProgressIndicator());
           },
-        ));
+        ),
+    );
   }
 }

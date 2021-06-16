@@ -15,7 +15,7 @@ class _AllCountriesState extends State<AllCountries> {
 
   Future<List> fetchCountries() async {
     var response = await Dio().get(
-        'https://restcountries.eu/rest/v2/all?fields=name;capital;currencies;alpha3Code;flag;languages;population;subregion;');
+        'https://restcountries.eu/rest/v2/all');
     return response.data;
   }
 
@@ -33,7 +33,7 @@ class _AllCountriesState extends State<AllCountries> {
         pinned: _pinned,
         expandedHeight: 200.0,
         flexibleSpace: FlexibleSpaceBar(
-          title: Text('Countries'),
+          title: Text('Countries', style: TextStyle(color: Colors.white),),
           background: Image.network(
             'https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
             fit: BoxFit.cover,

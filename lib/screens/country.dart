@@ -11,13 +11,12 @@ class Country extends StatefulWidget {
 }
 
 class _CountryState extends State<Country> {
-  String flag;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.country['name']),
+      appBar: AppBar(iconTheme: IconThemeData(color: Colors.white),
+        title: Text(widget.country['name'], style: TextStyle(color: Colors.white),)
       ),
       body: Column(
         children: [
@@ -74,13 +73,6 @@ class _CountryState extends State<Country> {
                 textInfoTwo: 'alpha3Code',
               ),
               SizedBox(height: 10.0,),
-              CountryInfo(
-                country: widget.country,
-                textInfoOne: 'Language: ',
-                /*textInfoTwo: '\${languages[2]}'*/
-               /* textInfoTwo: 'languages[2]'*/
-                textInfoTwo: '\${languages}[2]'
-              ),
             ],
           )
         ],
@@ -95,13 +87,11 @@ class CountryInfo extends StatelessWidget {
     @required this.country,
     this.textInfoOne,
     this.textInfoTwo,
-    this.language,
   }) : super(key: key);
 
   final Map country;
   final String textInfoOne;
   final String textInfoTwo;
-  final String language;
 
   @override
   Widget build(BuildContext context) {

@@ -1,23 +1,21 @@
 import 'package:country_api/screens/country.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AllCountries extends StatefulWidget {
-
   @override
   _AllCountriesState createState() => _AllCountriesState();
 }
 
 class _AllCountriesState extends State<AllCountries> {
+  bool _pinned = true;
   Future<List> countries;
   List<String> countriesFlag = [];
   String flag;
 
   Future<List> fetchCountries() async {
-    /*var response = await Dio().get('https://restcountries.eu/rest/v2/all');*/
-    var response = await Dio().get('https://restcountries.eu/rest/v2/all?fields=name;capital;currencies;alpha3Code;flag;languages;population;subregion;');
-
+    var response = await Dio().get(
+        'https://restcountries.eu/rest/v2/all?fields=name;capital;currencies;alpha3Code;flag;languages;population;subregion;');
     return response.data;
   }
 
@@ -30,38 +28,49 @@ class _AllCountriesState extends State<AllCountries> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List>(
+        body: CustomScrollView(slivers: [
+      SliverAppBar(
+        pinned: _pinned,
+        expandedHeight: 200.0,
+        flexibleSpace: FlexibleSpaceBar(
+          title: Text('Countries'),
+          background: Image.network(
+            'https://images.unsplash.com/photo-1600633349333-eebb43d01e23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: FutureBuilder<List>(
           future: countries,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: GridView.builder(
+                  child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 10.0,
-                    ),
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, int index) {
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  Country(snapshot.data[index]),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Country(snapshot.data[index]),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            elevation: 2,
+                            child: ListTile(
+                              title: Text(
+                                snapshot.data[index]['name'],
+                              ),
+                              trailing: Icon(Icons.keyboard_arrow_right),
                             ),
-                          );
-                        },
-                        child: Card(
-                          child:
-                          Text(snapshot.data[index]['name'], style: TextStyle(fontSize: 16.0),),
-                              /*SvgPicture.network(snapshot.data[index]['flag']),*/
-                        ),
-                      );
+                          ));
                     },
                   ),
                 ),
@@ -72,6 +81,7 @@ class _AllCountriesState extends State<AllCountries> {
             return Center(child: CircularProgressIndicator());
           },
         ),
-    );
+      )
+    ]));
   }
 }

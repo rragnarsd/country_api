@@ -59,7 +59,7 @@ class _CountryState extends State<Country> {
               CountryInfo(
                 country: widget.country,
                 textInfoOne: 'Sub-Region: ',
-                textInfoTwo: 'region',
+                textInfoTwo: 'subregion',
               ),
               SizedBox(height: 10.0,),
               CountryInfo(
@@ -73,11 +73,14 @@ class _CountryState extends State<Country> {
                 textInfoOne: 'Alpha-3-Code: ',
                 textInfoTwo: 'alpha3Code',
               ),
-              /* CountryInfo(
-            country: country,
-            textInfoOne: 'Currency: ',
-            textInfoTwo: '${currencies[3]}',
-          ),*/
+              SizedBox(height: 10.0,),
+              CountryInfo(
+                country: widget.country,
+                textInfoOne: 'Language: ',
+                /*textInfoTwo: '\${languages[2]}'*/
+               /* textInfoTwo: 'languages[2]'*/
+                textInfoTwo: '\${languages}[2]'
+              ),
             ],
           )
         ],
@@ -92,11 +95,13 @@ class CountryInfo extends StatelessWidget {
     @required this.country,
     this.textInfoOne,
     this.textInfoTwo,
+    this.language,
   }) : super(key: key);
 
   final Map country;
   final String textInfoOne;
   final String textInfoTwo;
+  final String language;
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +109,22 @@ class CountryInfo extends StatelessWidget {
       width: 350,
       child: Row(
           children: [
-        RichText(
-          text: TextSpan(
-            style: TextStyle(fontSize: 18.0, color: Colors.black87,
+        Flexible(
+          child: RichText(
+            overflow: TextOverflow.ellipsis,
+            text: TextSpan(
+              style: TextStyle(fontSize: 18.0, color: Colors.black87,
+              ),
+              children: [
+                TextSpan(
+                  text: textInfoOne,
+                  style: TextStyle(fontWeight: FontWeight.w600,),
+                ),
+                TextSpan(
+                  text: country[textInfoTwo].toString(),
+                ),
+              ],
             ),
-            children: [
-              TextSpan(
-                text: textInfoOne,
-                style: TextStyle(fontWeight: FontWeight.w600),
-              ),
-              TextSpan(
-                text: country[textInfoTwo].toString(),
-              ),
-            ],
           ),
         ),
       ]),

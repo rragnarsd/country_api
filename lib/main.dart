@@ -1,6 +1,4 @@
-import 'package:country_api/screens/all_countries.dart';
 import 'package:country_api/screens/bottom_navbar.dart';
-import 'package:country_api/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

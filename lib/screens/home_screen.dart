@@ -1,5 +1,3 @@
-import 'package:country_api/screens/all_countries.dart';
-import 'package:country_api/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

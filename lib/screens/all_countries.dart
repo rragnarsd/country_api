@@ -52,7 +52,7 @@ class _AllCountriesState extends State<AllCountries> {
         expandedHeight: 200.0,
         flexibleSpace: FlexibleSpaceBar(
           title: Text(
-            'Countries',
+            'Our World',
             style: TextStyle(color: Colors.white),
           ),
           background: Image.network(
@@ -116,7 +116,7 @@ class _AllCountriesState extends State<AllCountries> {
                             title: Text(
                               filteredCountries[index]['name'],
                             ),
-                            trailing: Icon(Icons.keyboard_arrow_right),
+                            /*trailing: Icon(Icons.keyboard_arrow_right),*/
                           ),
                         ),
                       );

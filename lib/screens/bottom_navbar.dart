@@ -1,10 +1,14 @@
+import 'package:country_api/screens/favorite_screen.dart';
 import 'package:country_api/screens/home_screen.dart';
-import 'package:country_api/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'all_countries.dart';
+import 'country.dart';
 
 class BottomNavBar extends StatefulWidget {
+  final List<Country> visitedCountries;
+
+  BottomNavBar({this.visitedCountries});
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
@@ -26,8 +30,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
         'title': 'Feeds Screen',
       },
       {
-        'page': ProfileScreen(),
-        'title': 'Search Screen',
+        /*'page': FavoriteScreen(widget.visitedCountries),*/
+        'page': FavoriteScreen(),
+        'title': 'Profile Screen',
       },
 
     ];
@@ -60,8 +65,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               label: 'Countries'
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile'
+              icon: Icon(Icons.list),
+              label: 'My List'
           )
         ],
       ),

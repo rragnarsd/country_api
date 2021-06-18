@@ -1,4 +1,3 @@
-import 'package:country_api/screens/favorite_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -18,28 +17,14 @@ class _CountryState extends State<Country> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           title: Text(
             widget.country['name'],
             style: TextStyle(color: Colors.white),
           ),
-          actions: [
-            Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon(Icons.star),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FavoriteScreen(),
-                        ),
-                    );
-                  },
-                ),
-            ),
-          ]),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -59,31 +44,21 @@ class _CountryState extends State<Country> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      FavoriteScreen();
-                     /*widget.country['name'] = _visitedCountries.add(['name']);*/
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          widget.country['name'],
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.w700,
-                          ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.country['name'],
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87
                         ),
                       ),
-                      beenThere
-                          ? Icon(Icons.star_border)
-                          : Icon(Icons.star)
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -175,6 +150,7 @@ class CountryInfo extends StatelessWidget {
                   text: textInfoOne,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
+                      color: Colors.black87
                   ),
                 ),
                 TextSpan(
